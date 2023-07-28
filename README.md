@@ -10,4 +10,4 @@ Download source to your 7 Days to Die mod folder (usually C:\Program Files (x86)
 
 This is a Harmony (C#) mod. EAC must be disabled.
 
-Inspired by [Spherell's modding work](https://github.com/SphereII/SphereII.Mods).
+Inspired by [SphereII's modding work](https://github.com/SphereII/SphereII.Mods).
