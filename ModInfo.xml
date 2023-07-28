@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+  <Name value="SpawnAllSleeperVolumes"/>
+  <DisplayName value="SpawnAllSleeperVolumes"/>
+  <Description value="Spawns all sleepers in a POI instead of pop-in spawning"/>
+  <Author value="vbnet3d"/>
+  <Version value="21.0.0.1"/>
+  <Website value=""/>
+</xml>
