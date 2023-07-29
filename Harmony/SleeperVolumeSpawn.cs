@@ -21,19 +21,25 @@ namespace SpawnSleepersInRange.Harmony
     public class SleeperVolumeTick
     {
         private static MethodInfo touchGroup;
+        private static FieldInfo hasPassives;
 
         public static void Postfix(SleeperVolume __instance, World _world)
         {
-            if (!__instance.wasCleared)
+            if (hasPassives == null)
+            {
+                hasPassives = typeof(SleeperVolume).GetField("hasPassives", BindingFlags.Instance | BindingFlags.NonPublic);
+            }
+
+            if (!__instance.wasCleared && !(bool)hasPassives.GetValue(__instance))
             {
                 if (touchGroup == null)
                 {
                     touchGroup = typeof(SleeperVolume).GetMethod("TouchGroup", BindingFlags.Instance | BindingFlags.NonPublic);
-                }
+                }                
 
                 foreach (EntityPlayer player in _world.Players.list)
                 {
-                    if (PlayerWithinRange(__instance, player, Config.SpawnRadius))
+                    if (PlayerWithinRange(__instance, player, Config.Instance.SpawnRadius))
                     {
                         touchGroup.Invoke(__instance, new object[] { _world, player, false });
                     }
@@ -53,7 +59,7 @@ namespace SpawnSleepersInRange.Harmony
     {
         public static bool Prefix()
         {
-            return !Config.DisableTriggers;
+            return !Config.Instance.DisableTriggers;
         }
     }
 }

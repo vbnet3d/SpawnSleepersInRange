@@ -8,8 +8,8 @@ namespace SpawnSleepersInRange.Harmony
         {
             Log.Out(" Loading Patch: " + GetType());
 
-            Log.Out(" Config.SpawnRadius: " + Common.Config.SpawnRadius);
-            Log.Out(" Config.DisableTriggers: " + Common.Config.DisableTriggers.ToString());
+            Log.Out(" Config.SpawnRadius: " + Common.Config.Instance.SpawnRadius);
+            Log.Out(" Config.DisableTriggers: " + Common.Config.Instance.DisableTriggers.ToString());
 
             var harmony = new HarmonyLib.Harmony(GetType().ToString());
             harmony.PatchAll(Assembly.GetExecutingAssembly());
