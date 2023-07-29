@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Config.cs" />
     <Compile Include="Harmony\Init.cs" />
     <Compile Include="Harmony\SleeperVolumeSpawn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

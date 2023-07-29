@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using SpawnSleepersInRange.Common;
 using System.Reflection;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace SpawnSleepersInRange.Harmony
         {
             __result.SetSleeperActive();
             __result.ResumeSleeperPose();
+            __result.IsSleeperPassive = true;
         }
     }
 
@@ -32,7 +34,7 @@ namespace SpawnSleepersInRange.Harmony
 
                 foreach (EntityPlayer player in _world.Players.list)
                 {
-                    if (PlayerWithinRange(__instance, player, 30.0f))
+                    if (PlayerWithinRange(__instance, player, Config.SpawnRadius))
                     {
                         touchGroup.Invoke(__instance, new object[] { _world, player, false });
                     }
@@ -44,5 +46,15 @@ namespace SpawnSleepersInRange.Harmony
         {
             return Vector3.Distance(volume.Center, player.position) <= range;
         }
-    }    
+    }
+
+    [HarmonyPatch(typeof(global::SleeperVolume))]
+    [HarmonyPatch("OnTriggered")]
+    public class SleeperVolumeOnTriggered
+    {
+        public static bool Prefix()
+        {
+            return Config.DisableTriggers;
+        }
+    }
 }
