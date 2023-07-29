@@ -13,7 +13,6 @@ namespace SpawnSleepersInRange.Harmony
         {
             __result.SetSleeperActive();
             __result.ResumeSleeperPose();
-            __result.IsSleeperPassive = true;
         }
     }
 
