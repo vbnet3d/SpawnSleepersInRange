@@ -54,7 +54,7 @@ namespace SpawnSleepersInRange.Harmony
     {
         public static bool Prefix()
         {
-            return Config.DisableTriggers;
+            return !Config.DisableTriggers;
         }
     }
 }
