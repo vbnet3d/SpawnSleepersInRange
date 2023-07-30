@@ -29,7 +29,7 @@ namespace SpawnSleepersInRange.Common
                     }
                     catch (Exception ex)
                     {
-                        Log.Error("Failed to load config for SpawnSleepersInRange. Falling back to defaults." + ex.Message);
+                        Log.Out("Failed to load config for SpawnSleepersInRange. Falling back to defaults." + ex.Message);
                         instance = new Config();
                     }
                 }

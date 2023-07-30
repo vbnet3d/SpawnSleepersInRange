@@ -11,8 +11,20 @@ namespace SpawnSleepersInRange.Harmony
     {
         public static void Postfix(ref EntityAlive __result, int ___flags)
         {
-            __result.SetSleeperActive();
-            __result.ResumeSleeperPose();
+            if (__result == null)
+            {
+                return;
+            }
+
+            try
+            {
+                __result.SetSleeperActive();
+                __result.ResumeSleeperPose();
+            }
+            catch (System.Exception ex)
+            {
+                Log.Out("SpawnSleepersInRange::SleeperVolumeSpawn failed: " + ex.Message);
+            }           
         }
     }
 
@@ -25,6 +37,11 @@ namespace SpawnSleepersInRange.Harmony
 
         public static void Postfix(SleeperVolume __instance, World _world)
         {
+            if (__instance == null || _world == null)
+            {
+                return;
+            }
+
             if (hasPassives == null)
             {
                 hasPassives = typeof(SleeperVolume).GetField("hasPassives", BindingFlags.Instance | BindingFlags.NonPublic);
