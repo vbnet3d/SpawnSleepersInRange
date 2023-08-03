@@ -2,4 +2,5 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SpawnRadius>30</SpawnRadius>
   <DisableTriggers>true</DisableTriggers>
+  <SpawnAggressive>false</SpawnAggressive>
 </Config>
