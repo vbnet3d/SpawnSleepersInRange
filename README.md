@@ -4,6 +4,10 @@ Experimental mod for 7 Day to Die (Alpha 21) that forces sleeper volumes to spaw
 
 WARNING: This is an entirely experimental mod. Use at your own risk. May affect frame rates if it spawns in too many zombies at one time.
 
+## Configuration
+
+Mod options can be changed by editing Config.xml in the mod folder.
+
 ## Installation
 
 Download source to your 7 Days to Die mod folder (usually C:\Program Files (x86)\Steam\steamapps\common\7 Days To Die\Mods).
