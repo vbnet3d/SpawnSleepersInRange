@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Xml.Serialization;
 
 namespace SpawnSleepersInRange.Common
@@ -15,9 +16,10 @@ namespace SpawnSleepersInRange.Common
                 {
                     try
                     {
+                        string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                         Log.Out("Loading SpawnSleepersInRange configuration...");
                         XmlSerializer serializer = new XmlSerializer(typeof(Config));
-                        using (StreamReader reader = new StreamReader(".\\Mods\\SpawnSleepersInRange\\Config.xml"))
+                        using (StreamReader reader = new StreamReader(assemblyFolder + "\\Config.xml"))
                         {
                             instance = (Config)serializer.Deserialize(reader);
                         }
