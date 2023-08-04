@@ -1,10 +1,5 @@
-﻿using Epic.OnlineServices.Presence;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace SpawnSleepersInRange.Common
@@ -25,7 +20,7 @@ namespace SpawnSleepersInRange.Common
                         using (StreamReader reader = new StreamReader(".\\Mods\\SpawnSleepersInRange\\Config.xml"))
                         {
                             instance = (Config)serializer.Deserialize(reader);
-                        }                            
+                        }
                     }
                     catch (Exception ex)
                     {
