@@ -3,4 +3,5 @@
   <SpawnRadius>30</SpawnRadius>
   <DisableTriggers>true</DisableTriggers>
   <SpawnAggressive>false</SpawnAggressive>
+  <AllowClearQuestTriggers>true</AllowClearQuestTriggers>
 </Config>

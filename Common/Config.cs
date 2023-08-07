@@ -41,6 +41,7 @@ namespace SpawnSleepersInRange.Common
         public float SpawnRadius = 30.0f;
         public bool DisableTriggers = true;
         public bool SpawnAggressive = false;
+        public bool AllowClearQuestTriggers = true;
     }
 
 }
