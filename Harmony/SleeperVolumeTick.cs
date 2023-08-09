@@ -71,6 +71,9 @@ namespace SpawnSleepersInRange.Harmony
 
         private static bool PlayerWithinRange(SleeperVolume volume, EntityPlayer player)
         {
+            // for smaller spawn radius ranges we really need to check more than the volume center, because volumes can easily be 2-3x
+            // larger than the radius, which would end up being the very same pop-in spawn issue we see with triggers.
+            // in such cases, we want to also check against the box corners
             if (Config.Instance.SpawnRadius <= 15.0f)
             {
                 List<Vector3> points = new List<Vector3> { volume.Center };

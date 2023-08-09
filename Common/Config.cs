@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
@@ -35,6 +37,20 @@ namespace SpawnSleepersInRange.Common
             private set
             {
                 instance = value;
+            }
+        }
+
+        private static FieldInfo[] fields;
+        public new IEnumerable<string> ToString()
+        {
+            if (fields == null)
+            {
+                fields = typeof(Config).GetFields(BindingFlags.Instance | BindingFlags.Public);
+            }
+
+            foreach (var field in fields)
+            {
+                yield return "Config." + field.Name + ": " + field.GetValue(this).ToString();
             }
         }
 
