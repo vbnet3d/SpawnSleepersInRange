@@ -63,7 +63,11 @@
   <ItemGroup>
     <Compile Include="Common\Config.cs" />
     <Compile Include="Harmony\Init.cs" />
+    <Compile Include="Common\Logging.cs" />
+    <Compile Include="Harmony\NavObjectIsValidEntity.cs" />
+    <Compile Include="Harmony\SleeperVolumeOnTriggered.cs" />
     <Compile Include="Harmony\SleeperVolumeSpawn.cs" />
+    <Compile Include="Harmony\SleeperVolumeTick.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
