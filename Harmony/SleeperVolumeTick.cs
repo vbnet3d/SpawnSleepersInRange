@@ -35,7 +35,7 @@ namespace SpawnSleepersInRange.Harmony
 
                 foreach (EntityPlayer player in _world.Players.list)
                 {
-                    if (Config.Instance.OnlySpawnInCurrentPOI)
+                    if (Config.Instance.OnlySpawnInCurrentPOI && __instance.PrefabInstance != null)
                     {
                         if (!__instance.PrefabInstance.IsWithinInfoArea(player.position))
                         {
@@ -47,7 +47,7 @@ namespace SpawnSleepersInRange.Harmony
                     {
                         Logging.LogOnce("Player is in vehicle");
 
-                        if (!__instance.PrefabInstance.IsWithinInfoArea(player.position))
+                        if (__instance.PrefabInstance == null || !__instance.PrefabInstance.IsWithinInfoArea(player.position))
                         {
                             // skip this player. It only makes sense to spawn sleepers if the player in a vehicle is actually within the POI's boundaries
                             // if someone is cruising through town, we don't want dozens of sleepers spawning in and out every second
