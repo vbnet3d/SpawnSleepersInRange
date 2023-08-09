@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 using SpawnSleepersInRange.Common;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
@@ -23,7 +25,7 @@ namespace SpawnSleepersInRange.Harmony
 
                 __result.IsSleeperPassive = !Config.Instance.SpawnAggressive;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Out("SpawnSleepersInRange::SleeperVolumeSpawn failed: " + ex.Message);
             }
@@ -36,6 +38,20 @@ namespace SpawnSleepersInRange.Harmony
     {
         private static MethodInfo touchGroup;
         private static FieldInfo hasPassives;
+        private static HashSet<string> logOnceMessages = new HashSet<string>();
+
+        private static void LogOnce(string message)
+        {
+            if (logOnceMessages.Contains(message))
+            {
+                return;
+            }
+            else
+            {
+                Log.Out(message);
+                logOnceMessages.Add(message);
+            }
+        }
 
         public static void Postfix(SleeperVolume __instance, World _world)
         {
@@ -58,17 +74,97 @@ namespace SpawnSleepersInRange.Harmony
 
                 foreach (EntityPlayer player in _world.Players.list)
                 {
-                    if (PlayerWithinRange(__instance, player, Config.Instance.SpawnRadius))
+                    if (Config.Instance.OnlySpawnInCurrentPOI)
                     {
+                        if (!__instance.PrefabInstance.IsWithinInfoArea(player.position))
+                        {
+                            continue;
+                        }
+                    }
+
+                    if (player.AttachedToEntity is EntityVehicle)
+                    {
+                        LogOnce("Player is in vehicle");
+
+                        if (!__instance.PrefabInstance.IsWithinInfoArea(player.position))
+                        {
+                            // skip this player. It only makes sense to spawn sleepers if the player in a vehicle is actually within the POI's boundaries
+                            // if someone is cruising through town, we don't want dozens of sleepers spawning in and out every second
+                            continue;
+                        }
+                        else
+                        {
+                            LogOnce("Player is inside POI: " + __instance.PrefabInstance.name);
+                        }
+                    }
+
+                    if (PlayerWithinRange(__instance, player))
+                    {
+                        // SleeperVolume.TouchGroup() handles *most* spawns, except for special triggers
                         touchGroup.Invoke(__instance, new object[] { _world, player, false });
+                        break;
                     }
                 }
             }
         }
 
-        private static bool PlayerWithinRange(SleeperVolume volume, EntityPlayer player, float range)
+        private static bool PlayerWithinRange(SleeperVolume volume, EntityPlayer player)
         {
-            return Vector3.Distance(volume.Center, player.position) <= range;
+            if (Config.Instance.SpawnRadius <= 15.0f)
+            {
+                List<Vector3> points = new List<Vector3> { volume.Center };
+                points.AddRange(CalculateBoxCorners(volume.BoxMax, volume.BoxMin));
+
+                foreach (Vector3 point in points)
+                {
+                    if (CheckDistance(point, player))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            else
+            {
+                return CheckDistance(volume.Center, player);
+            }
+        }
+
+        private static bool CheckDistance(Vector3 point, EntityPlayer player)
+        {
+            if (Config.Instance.UseSplitSpawnRadii)
+            {
+                if (Math.Abs(point.y - player.position.y) <= Config.Instance.VerticalSpawnRadius)
+                {
+                    if (Vector2.Distance(point, player.position) <= Config.Instance.SpawnRadius)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            else
+            {
+                return Vector3.Distance(point, player.position) <= Config.Instance.SpawnRadius;
+            }
+        }
+
+        private static Vector3[] CalculateBoxCorners(Vector3 boxMax, Vector3 boxMin)
+        {
+            var corners = new Vector3[8];
+
+            corners[0] = new Vector3(boxMax.x, boxMax.y, boxMax.z);
+            corners[1] = new Vector3(boxMax.x, boxMax.y, boxMin.z);
+            corners[2] = new Vector3(boxMax.x, boxMin.y, boxMax.z);
+            corners[3] = new Vector3(boxMax.x, boxMin.y, boxMin.z);
+            corners[4] = new Vector3(boxMin.x, boxMax.y, boxMax.z);
+            corners[5] = new Vector3(boxMin.x, boxMax.y, boxMin.z);
+            corners[6] = new Vector3(boxMin.x, boxMin.y, boxMax.z);
+            corners[7] = new Vector3(boxMin.x, boxMin.y, boxMin.z);
+
+            return corners;
         }
     }
 
@@ -77,13 +173,13 @@ namespace SpawnSleepersInRange.Harmony
     public class SleeperVolumeOnTriggered
     {
         private static MethodInfo updatePlayerTouched;
- 
+
         public static bool Prefix(SleeperVolume __instance, EntityPlayer _player, World _world)
         {
             if (Config.Instance.DisableTriggers)
             {
                 if (Config.Instance.AllowClearQuestTriggers)
-                {           
+                {
                     if (updatePlayerTouched == null)
                     {
                         updatePlayerTouched = typeof(SleeperVolume).GetMethod("UpdatePlayerTouched", BindingFlags.Instance | BindingFlags.NonPublic);
