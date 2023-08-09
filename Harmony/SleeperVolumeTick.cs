@@ -33,11 +33,13 @@ namespace SpawnSleepersInRange.Harmony
                     touchGroup = typeof(SleeperVolume).GetMethod("TouchGroup", BindingFlags.Instance | BindingFlags.NonPublic);
                 }
 
+                PrefabInstance POI = _world.GetPOIAtPosition(__instance.Center);
+
                 foreach (EntityPlayer player in _world.Players.list)
-                {
-                    if (Config.Instance.OnlySpawnInCurrentPOI && __instance.PrefabInstance != null)
+                {                   
+                    if (Config.Instance.OnlySpawnInCurrentPOI)
                     {
-                        if (!__instance.PrefabInstance.IsWithinInfoArea(player.position))
+                        if (POI != null && POI != _world.GetPOIAtPosition(player.position))
                         {
                             continue;
                         }
@@ -47,7 +49,7 @@ namespace SpawnSleepersInRange.Harmony
                     {
                         Logging.LogOnce("Player is in vehicle");
 
-                        if (__instance.PrefabInstance == null || !__instance.PrefabInstance.IsWithinInfoArea(player.position))
+                        if (POI == null || POI != _world.GetPOIAtPosition(player.position))
                         {
                             // skip this player. It only makes sense to spawn sleepers if the player in a vehicle is actually within the POI's boundaries
                             // if someone is cruising through town, we don't want dozens of sleepers spawning in and out every second
@@ -55,7 +57,7 @@ namespace SpawnSleepersInRange.Harmony
                         }
                         else
                         {
-                            Logging.LogOnce("Player is inside POI: " + __instance.PrefabInstance.name);
+                            Logging.LogOnce("Player is inside POI: " + POI.name);
                         }
                     }
 
