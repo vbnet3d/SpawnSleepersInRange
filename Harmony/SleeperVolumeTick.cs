@@ -37,29 +37,13 @@ namespace SpawnSleepersInRange.Harmony
 
                 foreach (EntityPlayer player in _world.Players.list)
                 {                   
-                    if (Config.Instance.OnlySpawnInCurrentPOI)
+                    if (Config.Instance.OnlySpawnInCurrentPOI || player.AttachedToEntity is EntityVehicle)
                     {
                         if (POI == null || POI != _world.GetPOIAtPosition(player.position))
                         {
                             continue;
                         }
-                    }
-
-                    if (player.AttachedToEntity is EntityVehicle)
-                    {
-                        Logging.LogOnce("Player is in vehicle");
-
-                        if (POI == null || POI != _world.GetPOIAtPosition(player.position))
-                        {
-                            // skip this player. It only makes sense to spawn sleepers if the player in a vehicle is actually within the POI's boundaries
-                            // if someone is cruising through town, we don't want dozens of sleepers spawning in and out every second
-                            continue;
-                        }
-                        else
-                        {
-                            Logging.LogOnce("Player is inside POI: " + POI.name);
-                        }
-                    }
+                    }                   
 
                     if (PlayerWithinRange(__instance, player))
                     {
