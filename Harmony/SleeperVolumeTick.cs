@@ -39,7 +39,7 @@ namespace SpawnSleepersInRange.Harmony
                 {                   
                     if (Config.Instance.OnlySpawnInCurrentPOI)
                     {
-                        if (POI != null && POI != _world.GetPOIAtPosition(player.position))
+                        if (POI == null || POI != _world.GetPOIAtPosition(player.position))
                         {
                             continue;
                         }
