@@ -74,5 +74,8 @@
     <Content Include="Config.xml" />
     <Content Include="ModInfo.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
