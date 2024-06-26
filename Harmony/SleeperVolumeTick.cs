@@ -1,57 +1,52 @@
-﻿using HarmonyLib;
-using SpawnSleepersInRange.Common;
+﻿using SpawnSleepersInRange.Common;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using HarmonyLib;
 
 namespace SpawnSleepersInRange.Harmony
 {
+
     [HarmonyPatch(typeof(global::SleeperVolume))]
     [HarmonyPatch("Tick")]
     public class SleeperVolumeTick
     {
-        private static MethodInfo touchGroup;
-        private static FieldInfo hasPassives;
-
         public static void Postfix(SleeperVolume __instance, World _world)
         {
-            if (__instance == null || _world == null)
+            try
             {
-                return;
-            }
-
-            if (hasPassives == null)
-            {
-                hasPassives = typeof(SleeperVolume).GetField("hasPassives", BindingFlags.Instance | BindingFlags.NonPublic);
-            }
-
-            if (!__instance.wasCleared && !(bool)hasPassives.GetValue(__instance))
-            {
-                if (touchGroup == null)
+                if (__instance == null || _world == null)
                 {
-                    touchGroup = typeof(SleeperVolume).GetMethod("TouchGroup", BindingFlags.Instance | BindingFlags.NonPublic);
+                    return;
                 }
 
-                PrefabInstance POI = _world.GetPOIAtPosition(__instance.Center);
+                if (!__instance.wasCleared && !__instance.hasPassives)
+                {
+                    PrefabInstance POI = _world.GetPOIAtPosition(__instance.Center);                   
 
-                foreach (EntityPlayer player in _world.Players.list)
-                {                   
-                    if (Config.Instance.OnlySpawnInCurrentPOI || player.AttachedToEntity is EntityVehicle)
+                    foreach (EntityPlayer player in _world.Players.list)
                     {
-                        if (POI == null || POI != _world.GetPOIAtPosition(player.position))
+
+                        if (Config.Instance.OnlySpawnInCurrentPOI || player.AttachedToEntity is EntityVehicle)
                         {
-                            continue;
+                            if (POI == null || POI != _world.GetPOIAtPosition(player.position))
+                            {
+                                continue;
+                            }
                         }
-                    }                   
 
-                    if (PlayerWithinRange(__instance, player))
-                    {
-                        // SleeperVolume.TouchGroup() handles *most* spawns, except for special triggers
-                        touchGroup.Invoke(__instance, new object[] { _world, player, false });
-                        break;
+                        if (PlayerWithinRange(__instance, player))
+                        {
+                            // SleeperVolume.TouchGroup() handles *most* spawns, except for special triggers
+                            __instance.TouchGroup(_world, player, false);
+                            break;
+                        }
                     }
                 }
+            }
+            catch
+            {
             }
         }
 
@@ -87,7 +82,7 @@ namespace SpawnSleepersInRange.Harmony
             {
                 if (Math.Abs(point.y - player.position.y) <= Config.Instance.VerticalSpawnRadius)
                 {
-                    if (Vector2.Distance(point, player.position) <= Config.Instance.SpawnRadius)
+                    if (Vector2.Distance(new Vector2(point.x, point.z), new Vector2(player.position.x, player.position.z)) <= Config.Instance.SpawnRadius)
                     {
                         return true;
                     }
