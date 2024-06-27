@@ -16,12 +16,7 @@ namespace SpawnSleepersInRange.Harmony
             {
                 if (Config.Instance.AllowClearQuestTriggers)
                 {
-                    if (updatePlayerTouched == null)
-                    {
-                        updatePlayerTouched = typeof(SleeperVolume).GetMethod("UpdatePlayerTouched", BindingFlags.Instance | BindingFlags.NonPublic);
-                    }
-
-                    updatePlayerTouched.Invoke(__instance, new object[] { _world, _player });
+                    __instance.UpdatePlayerTouched(_world, _player);                    
                 }
 
                 return false;
