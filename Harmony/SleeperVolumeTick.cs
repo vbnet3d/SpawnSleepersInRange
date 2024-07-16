@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using HarmonyLib;
+using System.Diagnostics;
 
 namespace SpawnSleepersInRange.Harmony
 {
@@ -12,10 +13,19 @@ namespace SpawnSleepersInRange.Harmony
     [HarmonyPatch("Tick")]
     public class SleeperVolumeTick
     {
+        static int counter = 0;
         public static void Postfix(SleeperVolume __instance, World _world)
         {
             try
             {
+                counter++;
+                if (counter <= Config.Instance.UpdateAfterTicksInterval)
+                {
+                    return;
+                }
+
+                counter = 0;
+
                 if (__instance == null || _world == null)
                 {
                     return;
@@ -27,7 +37,6 @@ namespace SpawnSleepersInRange.Harmony
 
                     foreach (EntityPlayer player in _world.Players.list)
                     {
-
                         if (Config.Instance.OnlySpawnInCurrentPOI || player.AttachedToEntity is EntityVehicle)
                         {
                             if (POI == null || POI != _world.GetPOIAtPosition(player.position))
