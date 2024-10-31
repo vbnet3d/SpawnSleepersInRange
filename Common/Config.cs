@@ -62,6 +62,7 @@ namespace SpawnSleepersInRange.Common
         public bool AllowClearQuestTriggers = true;
         public bool OnlySpawnInCurrentPOI = true;
         public int UpdateAfterTicksInterval = 30;
+        public bool ActivateTriggersAtRange = false;
     }
 
 }

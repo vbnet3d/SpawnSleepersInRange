@@ -72,6 +72,7 @@
     <Compile Include="Harmony\SleeperVolumeOnTriggered.cs" />
     <Compile Include="Harmony\SleeperVolumeSpawn.cs" />
     <Compile Include="Harmony\SleeperVolumeTick.cs" />
+    <Compile Include="Harmony\TriggerVolumeCheckTouching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
