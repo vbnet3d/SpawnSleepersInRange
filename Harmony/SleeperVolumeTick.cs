@@ -31,7 +31,7 @@ namespace SpawnSleepersInRange.Harmony
                     return;
                 }
 
-                if (!__instance.wasCleared && !__instance.hasPassives)
+                if (!__instance.wasCleared)
                 {
                     PrefabInstance POI = _world.GetPOIAtPosition(__instance.Center);                   
 
