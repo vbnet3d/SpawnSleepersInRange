@@ -17,7 +17,6 @@ Mod options can be changed by editing Config.xml in the mod folder.
 |**SpawnAggressive**|true or false| If true, zombies spawn aggro'ed, and may hunt the player down. This makes stealth more challenging. If false, zombies spawn passive/sleeping as normal.
 |**AllowClearQuestTriggers**|true or false|If true, POI triggers related specifically to clear quests will still be run. Many clear quests cannot be completed with this set to false.
 |**OnlySpawnInCurrentPOI**|true or false|If true, only spawns Zombies if the player is within the bounds of a POI. Can save FPS in large cities with buildings close together.
-|**UpdateAfterTicksInterval**|Integer (e.g. 30)|The amount of ticks to skip between distance checks. Most systems run 60 ticks per second.
 |**ActivateTriggersAtRange**|true or false|If true, adds the spawn radius and vertical spawn radius to trigger proximity checks so that they trigger further out. This should reduce the jump scare effect of triggered spawns.
 
 ## Installation
