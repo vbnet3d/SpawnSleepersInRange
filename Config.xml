@@ -7,6 +7,5 @@
   <SpawnAggressive>false</SpawnAggressive>
   <AllowClearQuestTriggers>true</AllowClearQuestTriggers>
   <OnlySpawnInCurrentPOI>true</OnlySpawnInCurrentPOI>
-  <UpdateAfterTicksInterval>30</UpdateAfterTicksInterval>
   <ActivateTriggersAtRange>true</ActivateTriggersAtRange>
 </Config>
