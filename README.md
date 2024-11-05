@@ -18,6 +18,7 @@ Mod options can be changed by editing Config.xml in the mod folder.
 |**AllowClearQuestTriggers**|true or false|If true, POI triggers related specifically to clear quests will still be run. Many clear quests cannot be completed with this set to false.
 |**OnlySpawnInCurrentPOI**|true or false|If true, only spawns Zombies if the player is within the bounds of a POI. Can save FPS in large cities with buildings close together.
 |**ActivateTriggersAtRange**|true or false|If true, adds the spawn radius and vertical spawn radius to trigger proximity checks so that they trigger further out. This should reduce the jump scare effect of triggered spawns.
+|**SpawningMethod**|POI or Proximity|If POI, makes spawning more efficient but less flexible. Will spawn in all volumes for a POI in a rolling manner, as well as immediately running all triggers. If Proximity, uses proximity setting to spawn volumes and triggers.
 
 ## Installation
 

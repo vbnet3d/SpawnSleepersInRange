@@ -8,4 +8,5 @@
   <AllowClearQuestTriggers>true</AllowClearQuestTriggers>
   <OnlySpawnInCurrentPOI>true</OnlySpawnInCurrentPOI>
   <ActivateTriggersAtRange>true</ActivateTriggersAtRange>
+  <SpawningMethod>POI</SpawningMethod>
 </Config>

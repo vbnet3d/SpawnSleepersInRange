@@ -62,6 +62,12 @@ namespace SpawnSleepersInRange.Common
         public bool AllowClearQuestTriggers = true;
         public bool OnlySpawnInCurrentPOI = true;
         public bool ActivateTriggersAtRange = false;
+        public SpawningMethod SpawningMethod = SpawningMethod.POI;
+    }
+
+    public enum SpawningMethod
+    {
+        Proximity,POI
     }
 
 }

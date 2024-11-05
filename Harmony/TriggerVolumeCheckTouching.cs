@@ -15,13 +15,13 @@ namespace SpawnSleepersInRange.Harmony
     {
         public static bool Prefix(TriggerVolume __instance, World _world, EntityPlayer _player)
         {
-            if (Config.Instance.ActivateTriggersAtRange)
+            if (Config.Instance.SpawningMethod == SpawningMethod.Proximity && Config.Instance.ActivateTriggersAtRange)
             {
                 if (__instance.isTriggered)
                     return false;
 
                 Vector3 position = _player.position;
-                position.y += 0.8f;              
+                position.y += 0.8f;
 
                 Vector3i max = __instance.BoxMax + new Vector3i(Config.Instance.SpawnRadius / 2, Config.Instance.VerticalSpawnRadius / 2, Config.Instance.SpawnRadius / 2);
                 Vector3i min = __instance.BoxMin - new Vector3i(Config.Instance.SpawnRadius / 2, Config.Instance.VerticalSpawnRadius / 2, Config.Instance.SpawnRadius / 2);

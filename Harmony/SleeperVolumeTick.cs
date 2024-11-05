@@ -15,38 +15,39 @@ namespace SpawnSleepersInRange.Harmony
     {
         public static void Postfix(SleeperVolume __instance, World _world)
         {
-            try
+            if (Config.Instance.SpawningMethod == SpawningMethod.Proximity)
             {
-                if (__instance == null || _world == null)
+                try
                 {
-                    return;
-                }              
-
-                if (!__instance.wasCleared)
-                {
-                    PrefabInstance POI = _world.GetPOIAtPosition(__instance.Center);                   
-
-                    foreach (EntityPlayer player in _world.Players.list)
+                    if (__instance == null || _world == null)
                     {
-                        if (Config.Instance.OnlySpawnInCurrentPOI || player.AttachedToEntity is EntityVehicle)
-                        {
-                            if (POI == null || POI != _world.GetPOIAtPosition(player.position))
-                            {
-                                continue;
-                            }
-                        }
+                        return;
+                    }
 
-                        if (PlayerWithinRange(__instance, player))
+                    if (!__instance.wasCleared)
+                    {
+                        foreach (EntityPlayer player in _world.Players.list)
                         {
-                            // SleeperVolume.TouchGroup() handles *most* spawns, except for special triggers
-                            __instance.TouchGroup(_world, player, false);
-                            break;
+                            if (Config.Instance.OnlySpawnInCurrentPOI || player.AttachedToEntity is EntityVehicle)
+                            {
+                                if (__instance.PrefabInstance == null || __instance.PrefabInstance != player.prefab)
+                                {
+                                    continue;
+                                }
+                            }
+
+                            if (PlayerWithinRange(__instance, player))
+                            {
+                                // SleeperVolume.TouchGroup() handles *most* spawns, except for special triggers
+                                __instance.TouchGroup(_world, player, false);
+                                break;
+                            }
                         }
                     }
                 }
-            }
-            catch
-            {
+                catch
+                {
+                }
             }
         }
 
@@ -55,7 +56,7 @@ namespace SpawnSleepersInRange.Harmony
             // for smaller spawn radius ranges we really need to check more than the volume center, because volumes can easily be 2-3x
             // larger than the radius, which would end up being the very same pop-in spawn issue we see with triggers.
             // in such cases, we want to also check against the box corners
-            if (Config.Instance.SpawnRadius <= 15.0f)
+            if (Config.Instance.SpawnRadius <= 10.0f)
             {
                 List<Vector3> points = new List<Vector3> { volume.Center };
                 points.AddRange(CalculateBoxCorners(volume.BoxMax, volume.BoxMin));
