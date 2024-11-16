@@ -1,6 +1,8 @@
-﻿using HarmonyLib;
+﻿using System;
+
+using HarmonyLib;
+
 using SpawnSleepersInRange.Common;
-using System;
 
 namespace SpawnSleepersInRange.Harmony
 {
