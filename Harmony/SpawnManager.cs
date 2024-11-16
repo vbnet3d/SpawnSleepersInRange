@@ -1,11 +1,12 @@
-﻿using HarmonyLib;
-using SpawnSleepersInRange.Common;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using HarmonyLib;
+
+using SpawnSleepersInRange.Common;
+
 using UnityEngine;
 
 namespace SpawnSleepersInRange.Harmony
@@ -17,6 +18,8 @@ namespace SpawnSleepersInRange.Harmony
         private Dictionary<EntityPlayer, Queue<SleeperVolume>> toSpawn;
         private Dictionary<EntityPlayer, Queue<TriggerVolume>> toTrigger;
         private Dictionary<EntityPlayer, PrefabInstance> poiTracker;
+
+        private Coroutine handlerCoroutine;
 
         public bool IsRunning { get; private set; }
 
@@ -43,13 +46,21 @@ namespace SpawnSleepersInRange.Harmony
         public void Start()
         {
             IsRunning = true;
-            StartCoroutine(SpawnHandler());
+            if(handlerCoroutine == null)
+            {
+                handlerCoroutine = StartCoroutine(SpawnHandler());
+            }
         }
 
         public void Stop()
         {
             IsRunning = false;
-            StopAllCoroutines();
+            // Stopping all coroutines could potentially stop a coroutine that the base game needs running, so stop only this one.
+            if(handlerCoroutine != null)
+            {
+                StopCoroutine(handlerCoroutine);
+                handlerCoroutine = null;
+            }
         }
 
         IEnumerator SpawnHandler()
@@ -158,4 +169,3 @@ namespace SpawnSleepersInRange.Harmony
         }
     }
 }
-

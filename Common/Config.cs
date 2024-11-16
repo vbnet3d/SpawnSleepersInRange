@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -24,6 +23,10 @@ namespace SpawnSleepersInRange.Common
                         using (StreamReader reader = new StreamReader(assemblyFolder + "\\Config.xml"))
                         {
                             instance = (Config)serializer.Deserialize(reader);
+                            if(!instance.UseSplitSpawnRadii)
+                            {
+                                instance.VerticalSpawnRadius = instance.SpawnRadius;
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -69,5 +72,4 @@ namespace SpawnSleepersInRange.Common
     {
         Proximity,POI
     }
-
 }
