@@ -97,27 +97,7 @@ namespace SpawnSleepersInRange.Harmony
                         }
                         else
                         {
-                            toSpawn.Add(player, new Queue<SleeperVolume>());
-                            toTrigger.Add(player, new Queue<TriggerVolume>());
-
-                            if (poiTracker.ContainsKey(player))
-                                poiTracker[player] = player.prefab;
-                            else
-                                poiTracker.Add(player, player.prefab);
-
-                            foreach (var sleeperVolume in player.prefab.sleeperVolumes
-                                .Where(s => !s.wasCleared)
-                                .OrderBy(s => Vector3.Distance(s.Center, player.position)))
-                            {
-                                toSpawn[player].Enqueue(sleeperVolume);
-                            }
-
-                            foreach (var triggerVolume in player.prefab.triggerVolumes
-                                .Where(t => !t.isTriggered)
-                                .OrderBy(t => Vector3.Distance(t.Center, player.position)))
-                            {
-                                toTrigger[player].Enqueue(triggerVolume);
-                            }
+                            QueueSleeperVolumesForSpawn(player);
                         }
                     }
 
@@ -128,6 +108,57 @@ namespace SpawnSleepersInRange.Harmony
                 }
 
                 yield return new WaitForSeconds(0.25f);
+            }
+        }        
+
+        public void QueueSleeperVolumesForSpawn(EntityPlayer player)
+        {
+            if (player == null || player.prefab == null)
+                return;
+
+            if (toSpawn.ContainsKey(player))
+            {
+                toSpawn[player].Clear();
+                toSpawn.Remove(player);
+            }
+
+            if (toTrigger.ContainsKey(player))
+            {
+                toTrigger[player].Clear();
+                toTrigger.Remove(player);
+            }
+
+            toSpawn.Add(player, new Queue<SleeperVolume>());
+            toTrigger.Add(player, new Queue<TriggerVolume>());
+
+            if (poiTracker.ContainsKey(player))
+                poiTracker[player] = player.prefab;
+            else
+                poiTracker.Add(player, player.prefab);
+
+            foreach (var sleeperVolume in player.prefab.sleeperVolumes
+                .Where(s => !s.wasCleared)
+                .OrderBy(s => Vector3.Distance(s.Center, player.position)))
+            {
+                toSpawn[player].Enqueue(sleeperVolume);
+            }
+
+            foreach (var triggerVolume in player.prefab.triggerVolumes
+                .Where(t => !t.isTriggered)
+                .OrderBy(t => Vector3.Distance(t.Center, player.position)))
+            {
+                toTrigger[player].Enqueue(triggerVolume);
+            }
+        }
+
+        internal void ResetSleeperVolumes(EntityPlayer player)
+        {
+            if (player == null || player.prefab == null)
+                return;
+
+            foreach (var sleeperVolume in player.prefab.sleeperVolumes)
+            {
+                sleeperVolume.Reset();
             }
         }
     }
@@ -141,7 +172,7 @@ namespace SpawnSleepersInRange.Harmony
             if (Config.Instance.SpawningMethod == SpawningMethod.POI)
             {
                 SpawnManager.Instance.Start();
-            }            
+            }
         }
     }
 

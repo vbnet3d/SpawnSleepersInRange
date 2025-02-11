@@ -20,6 +20,13 @@ Mod options can be changed by editing Config.xml in the mod folder.
 |**ActivateTriggersAtRange**|true or false|If true, adds the spawn radius and vertical spawn radius to trigger proximity checks so that they trigger further out. This should reduce the jump scare effect of triggered spawns.
 |**SpawningMethod**|POI or Proximity|If POI, makes spawning more efficient but less flexible. Will spawn in all volumes for a POI in a rolling manner, as well as immediately running all triggers. If Proximity, uses proximity setting to spawn volumes and triggers.
 
+## Console Commands
+
+| Command | Description |
+| spawn.config [property] [value] | Set configuration values for SpawnSleepersInRange |
+| spawn.trigger | Trigger all active sleeper volumes to spawn in the current POI |
+| spawn.reset | Reset all sleeper volumes in the current POI |
+
 ## Installation
 
 Download source to your 7 Days to Die mod folder (usually C:\Program Files (x86)\Steam\steamapps\common\7 Days To Die\Mods).

@@ -66,9 +66,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Config.cs" />
+    <Compile Include="Harmony\ConsoleCommands\ResetSpawnsConsoleCommand.cs" />
+    <Compile Include="Harmony\ConsoleCommands\SetConfigConsoleCommand.cs" />
+    <Compile Include="Harmony\ConsoleCommands\TriggerAllSpawnsConsoleCommand.cs" />
     <Compile Include="Harmony\Init.cs" />
     <Compile Include="Common\Logging.cs" />
     <Compile Include="Harmony\NavObjectIsValidEntity.cs" />
+    <Compile Include="Harmony\ConsoleCommands\SpawnConsoleCommandBase.cs" />
     <Compile Include="Harmony\SpawnManager.cs" />
     <Compile Include="Harmony\SleeperVolumeOnTriggered.cs" />
     <Compile Include="Harmony\SleeperVolumeSpawn.cs" />
