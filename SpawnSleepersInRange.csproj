@@ -72,7 +72,6 @@
     <Compile Include="Harmony\NavObjectIsValidEntity.cs" />
     <Compile Include="Harmony\ConsoleCommands\SpawnConsoleCommandBase.cs" />
     <Compile Include="Harmony\SpawnManager.cs" />
-    <Compile Include="Harmony\SleeperVolumeOnTriggered.cs" />
     <Compile Include="Harmony\SleeperVolumeSpawn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

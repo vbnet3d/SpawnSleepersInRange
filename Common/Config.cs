@@ -54,15 +54,9 @@ namespace SpawnSleepersInRange.Common
             }
         }
 
-        public bool UseSplitSpawnRadii = true; // if true, calculate horizontal and vertical radii separately in distance calculation (doubles calculations)
         public float SpawnRadius = 30.0f; // either total spawn radius (3D) or horizontal spawn radius       
-        public float VerticalSpawnRadius = 10.0f;        
-        public bool DisableTriggers = true;
+        public float VerticalSpawnRadius = 10.0f;  
         public bool SpawnAggressive = false;
-        public bool AllowClearQuestTriggers = true;
-        public bool OnlySpawnInCurrentPOI = true;
-        public bool ActivateTriggersAtRange = false;
-        public SpawningMethod SpawningMethod = SpawningMethod.POI;
     }
 
     public enum SpawningMethod

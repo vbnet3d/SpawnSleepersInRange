@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <UseSplitSpawnRadii>true</UseSplitSpawnRadii>
-  <SpawnRadius>10</SpawnRadius>
+  <SpawnRadius>15</SpawnRadius>
   <VerticalSpawnRadius>5</VerticalSpawnRadius>
   <SpawnAggressive>false</SpawnAggressive>
 </Config>

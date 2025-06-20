@@ -15,36 +15,15 @@ namespace SpawnSleepersInRange.Harmony.ConsoleCommands
             {
                 switch (_params[0].ToLower())
                 {
-                    case "usesplitspawnradii":
-                        SetConfigBool(ref Config.Instance.UseSplitSpawnRadii, _params[1]);                        
-                        break;
                     case "spawnradius":
                         SetConfigFloat(ref Config.Instance.SpawnRadius, _params[1]);
                         break;
                     case "verticalspawnradius":
                         SetConfigFloat(ref Config.Instance.VerticalSpawnRadius, _params[1]);
                         break;
-                    case "disabletriggers":
-                        SetConfigBool(ref Config.Instance.DisableTriggers, _params[1]);
-                        break;
                     case "spawnaggressive":
                         SetConfigBool(ref Config.Instance.SpawnAggressive, _params[1]);
-                        break;
-                    case "allowclearquesttriggers":
-                        SetConfigBool(ref Config.Instance.AllowClearQuestTriggers, _params[1]);
-                        break;
-                    case "onlyspawnincurrentpoi":
-                        SetConfigBool(ref Config.Instance.OnlySpawnInCurrentPOI, _params[1]);
-                        break;
-                    case "activatetriggersatrange":
-                        SetConfigBool(ref Config.Instance.ActivateTriggersAtRange, _params[1]);
-                        break;
-                    case "spawningmethod":
-                        if (_params[1].ToLower() == "poi")
-                            Config.Instance.SpawningMethod = SpawningMethod.POI;
-                        else
-                            Config.Instance.SpawningMethod = SpawningMethod.Proximity;
-                        break;
+                        break; 
                     default:
                         PrintUse();
                         break;
