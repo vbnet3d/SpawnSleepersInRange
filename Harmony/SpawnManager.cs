@@ -117,7 +117,6 @@ namespace SpawnSleepersInRange.Harmony
                 {
                     foreach (var sleeperVolume in poi.SleeperVolumes)
                     {
-                        sleeperVolume.Reset();
                         sleeperVolume.Despawn(GameManager.Instance.World);
                     }
                 }
