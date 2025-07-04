@@ -4,6 +4,6 @@
   <DisplayName value="Spawn Sleepers In Range"/>
   <Description value="Spawns all sleepers in range instead of pop-in spawning"/>
   <Author value="vbnet3d"/>
-  <Version value="2.0.0.2"/>
+  <Version value="2.0.0.3"/>
   <Website value="https://github.com/vbnet3d/SpawnSleepersInRange"/>
 </xml>
